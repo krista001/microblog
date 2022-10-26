@@ -17,15 +17,8 @@ class AllPosts extends Component
     public $comment;
 
     protected $rules = [
-        'comment.*' => 'required|string|max:5',
+        'comment.*' => 'required|string',
     ];
-
-    // // public function mount()
-    // // {
-    // //     $this->fill([
-    // //         'comments' => collect([['comment' => '']]),
-    // //     ]);
-    // // }
 
     public function render()
     {

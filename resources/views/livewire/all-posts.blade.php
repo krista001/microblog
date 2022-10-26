@@ -6,7 +6,7 @@
                 <div>
                     <p>{{$post->text}}</p>
                     <div>
-                            {{$post->user->name}} Created at: {{$post->updated_at}}
+                        {{$post->user->name}} Created at: {{$post->updated_at}}
                     </div>
                 </div>
                 <div>
@@ -30,9 +30,9 @@
                 </div>
                 @error('comment.'.$post->id) <span class="error">{{ $message }}</span> @enderror
             </form>
-            <div class="">
+            <div>
                 @foreach ($post->comments as $comment)
-                    <div class="">
+                    <div>
                         <p class="text-xs font-bold text-gray-500 dark:text-gray-400">{{$comment->user->name}}</p>
                         <p class="mb-2 text-sm font-light text-gray-500 dark:text-gray-400">{{$comment->comment}}</p>
                     </div>

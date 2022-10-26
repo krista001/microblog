@@ -3,6 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Resources\PostResource;
+use App\Models\Post;
+
+use App\Http\Resources\UserResource;
+use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,4 +21,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('/post/{post}', function (Post $post) {
+    return new PostResource($post);
+})->middleware('can:view,post');
+
+Route::get('/posts', function () {
+    return PostResource::collection(Post::where('is_private', 0)->paginate(50));   
+});
+
+Route::get('/user/{id}', function ($id) {
+    return new UserResource(User::findOrFail($id));   
 });

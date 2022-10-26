@@ -12,6 +12,7 @@
     @endif
 
     @foreach ($posts as $post)
+    <div class="p-4 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 mb-4">
         <div class="flex justify-between p-4 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 mb-4">
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{$post->text}}</p>
             <div>
@@ -23,6 +24,26 @@
             @endif 
             </div>
         </div>
+        <form class="border-t-2 py-2 " wire:submit.prevent="comment({{$post->id}})">
+            <label class="sr-only">Your comment</label>
+            <div class="flex items-center py-2 rounded-lg dark:bg-gray-700">
+                <textarea wire:model.defer="comment.{{$post->id}}" rows="1" class="block mx-4  w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your commnet..."></textarea>
+                <button type="submit" class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600">
+                    <svg aria-hidden="true" class="w-6 h-6 rotate-90" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
+                    <span class="sr-only">Send message</span>
+                </button>
+            </div>
+            @error('comment.'.$post->id) <span class="error">{{ $message }}</span> @enderror
+        </form>
+        <div>
+            @foreach ($post->comments as $comment)
+                <div>
+                    <p class="text-xs font-bold text-gray-500 dark:text-gray-400">{{$comment->user->name}}</p>
+                    <p class="mb-2 text-sm font-light text-gray-500 dark:text-gray-400">{{$comment->comment}}</p>
+                </div>
+            @endforeach
+        </div>
+    </div>
     @endforeach
  
     {{ $posts->links() }}

@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 
 use App\Models\Post;
+use App\Models\Comment;
 
 class Posts extends Component
 {
@@ -13,6 +14,7 @@ class Posts extends Component
     public $text;
     public $post_id;
     public $updateMode = false;
+    public $comment;
  
     protected $rules = [
         'text' => 'required|string|max:500',
@@ -77,6 +79,23 @@ class Posts extends Component
         $this->resetInputFields();
     }
 
+    public function comment($post_id)
+    {
+        $validatedData = $this->validate(['comment.*' => 'required|string']);
+      
+        if($validatedData && isset($validatedData['comment'][$post_id]))
+        {
+            $validatedData['comment'] = $validatedData['comment'][$post_id];
+            $validatedData['user_id'] = auth()->user()->id;
+            $validatedData['post_id'] = $post_id;
+
+            $res = Comment::create($validatedData);
+        
+            session()->flash('success', 'Comment is added successfuly');
+        }
+
+    }
+    
     public function makePrivate($post_id)
     {
         $post = Post::find($post_id);

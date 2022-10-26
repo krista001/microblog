@@ -29,11 +29,15 @@ class PostPolicy
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Post $post)
+    public function view(?User $user, Post $post)
     {
-        return $post->is_private == 0 || $post->user_id == $user->id
-            ? Response::allow()
-            : Response::deny('You do not own this post.', 403);
+        if (!$post->is_private) {
+            return true;
+        } else if ($post->user_id == optional($user)->id){
+            return true;
+        } else{
+            return false;
+        }
     }
 
     /**
