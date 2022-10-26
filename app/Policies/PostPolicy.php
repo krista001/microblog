@@ -32,11 +32,9 @@ class PostPolicy
     public function view(?User $user, Post $post)
     {
         if (!$post->is_private) {
-            return true;
-        } else if ($post->user_id == optional($user)->id){
-            return true;
+            return Response::allow();
         } else{
-            return false;
+            return Response::deny('This is private post', 403);
         }
     }
 

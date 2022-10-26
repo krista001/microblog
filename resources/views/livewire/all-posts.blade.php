@@ -1,6 +1,6 @@
 <div>
     @foreach ($posts as $post)
-        @can('view', $post)    
+  
         <div class="p-4 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 mb-4">
             <article class="mb-2 flex justify-between">
                 <div>
@@ -39,7 +39,6 @@
                 @endforeach
             </div>
         </div>
-        @endcan
     @endforeach
  
     {{ $posts->links() }}

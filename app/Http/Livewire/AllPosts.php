@@ -23,7 +23,7 @@ class AllPosts extends Component
     public function render()
     {
         return view('livewire.all-posts', [
-            'posts' => Post::orderBy('created_at', 'desc')->paginate(10),
+            'posts' => Post::where('is_private', 0)->orderBy('created_at', 'desc')->paginate(10),
         ]);
     }
 
@@ -41,7 +41,6 @@ class AllPosts extends Component
         
             session()->flash('success', 'Comment is added successfuly');
         }
-
     }
 
     public function makePrivate($post_id)

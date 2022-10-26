@@ -103,4 +103,12 @@ class Posts extends Component
             'is_private' => 1,
         ]);
     }
+
+    public function makePublic($post_id)
+    {
+        $post = Post::find($post_id);
+        $post->update([
+            'is_private' => 0,
+        ]);
+    }
 }
