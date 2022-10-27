@@ -31,6 +31,6 @@ Route::get('/posts', function () {
     return PostResource::collection(Post::where('is_private', 0)->paginate(50));   
 });
 
-Route::get('/user/{id}', function ($id) {
-    return new UserResource(User::findOrFail($id));   
+Route::get('/user/{user}', function (User $user) {
+    return new UserResource($user);   
 });
